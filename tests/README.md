@@ -5,7 +5,7 @@ Use PHP 8.4 and Composer, with PDO SQLite, mbstring and XML extensions:
 ```sh
 composer install
 composer test:unit
-DB_CONNECTION=sqlite composer test:integration
+DB_DRIVER=sqlite composer test:integration
 composer analyse:phpstan
 ```
 
