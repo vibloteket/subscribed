@@ -13,8 +13,8 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Discussion\Discussion;
 use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
+use Flarum\User\User;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use FoF\Subscribed\Support\NotificationPreferences;
 

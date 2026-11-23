@@ -13,8 +13,8 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Notification\NotificationSyncer;
 use Flarum\Post\Post;
-use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
+use Flarum\User\User;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
 use FoF\Subscribed\Support\NotificationPreferences;
 

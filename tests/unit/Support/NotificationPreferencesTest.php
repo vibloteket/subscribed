@@ -3,11 +3,12 @@
 namespace FoF\Subscribed\Tests\Unit\Support;
 
 use Flarum\Testing\unit\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use FoF\Subscribed\Support\NotificationPreferences;
 
 class NotificationPreferencesTest extends TestCase
 {
-    /** @dataProvider preferences */
+    #[DataProvider('preferences')]
     public function test_explicit_preferences(string $json, string $type, bool $expected): void
     {
         $this->assertSame($expected, NotificationPreferences::hasEnabledDriver($json, $type));

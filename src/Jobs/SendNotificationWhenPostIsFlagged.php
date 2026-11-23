@@ -13,8 +13,8 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Flags\Flag;
 use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
+use Flarum\User\User;
 use FoF\Subscribed\Blueprints\PostFlaggedBlueprint;
 use FoF\Subscribed\Support\NotificationPreferences;
 
