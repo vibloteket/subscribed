@@ -13,10 +13,10 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Notification\NotificationSyncer;
 use Flarum\Post\Post;
-use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
+use Flarum\User\User;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
-use Illuminate\Database\Query\Expression;
+use FoF\Subscribed\Support\NotificationPreferences;
 
 class SendNotificationWhenPostIsUnapproved extends AbstractJob
 {
@@ -29,10 +29,11 @@ class SendNotificationWhenPostIsUnapproved extends AbstractJob
     {
         $post = $this->post;
 
-        $notify = User::query()
-            ->where('users.id', '!=', $post->user_id)
-            ->where('preferences', 'regexp', new Expression('\'"notify_postUnapproved_[a-z]+":true\''))
-            ->get();
+        $notify = NotificationPreferences::recipients(
+            User::query()
+                ->where('users.id', '!=', $post->user_id),
+            'postUnapproved'
+        );
 
         $notify = $notify->filter(function (User $recipient) use ($post) {
             return $recipient->can('subscribePostUnapproved') && $post->isVisibleTo($recipient);

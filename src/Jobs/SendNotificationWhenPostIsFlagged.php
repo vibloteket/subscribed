@@ -13,10 +13,10 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Flags\Flag;
 use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
+use Flarum\User\User;
 use FoF\Subscribed\Blueprints\PostFlaggedBlueprint;
-use Illuminate\Database\Query\Expression;
+use FoF\Subscribed\Support\NotificationPreferences;
 
 class SendNotificationWhenPostIsFlagged extends AbstractJob
 {
@@ -29,10 +29,11 @@ class SendNotificationWhenPostIsFlagged extends AbstractJob
         $post = $this->flag->post;
         $flag = $this->flag;
 
-        $notify = User::query()
-            ->where('users.id', '!=', $flag->user_id)
-            ->where('preferences', 'regexp', new Expression('\'"notify_postFlagged_[a-z]+":true\''))
-            ->get();
+        $notify = NotificationPreferences::recipients(
+            User::query()
+                ->where('users.id', '!=', $flag->user_id),
+            'postFlagged'
+        );
 
         $notify = $notify->filter(function (User $recipient) use ($post) {
             return $recipient->can('subscribePostFlagged') && $recipient->can('viewFlags', $post->discussion);
